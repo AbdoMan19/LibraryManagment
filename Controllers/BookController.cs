@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LibraryManagment.Repository;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagment.Controllers
 {
     public class BookController : Controller
     {
+        private readonly IBookRepository? _bookRepository=null;
+        public BookController(IBookRepository bookRepository) { 
+            _bookRepository = bookRepository;
+        }
         public IActionResult Create()
         {
             return View();

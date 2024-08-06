@@ -1,6 +1,15 @@
-﻿namespace LibraryManagment.Repository
+﻿using LibraryManagment.Models;
+using NuGet.Frameworks;
+
+namespace LibraryManagment.Repository
 {
-    public class IAuthorRepository
+    public interface IAuthorRepository
     {
+        IEnumerable<Author> GetAllAuthors();
+        Author GetAuthorById(int id);
+        bool AddAuthor(Author author);
+        bool UpdateAuthor(Author author);
+        bool DeleteAuthor(int id);
+
     }
 }

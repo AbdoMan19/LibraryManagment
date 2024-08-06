@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using LibraryManagment.Data;
+using LibraryManagment.Repository;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -7,6 +8,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
+builder.Services.AddScoped<IMemberRepository , MemberRepository>();
+builder.Services.AddScoped<IBorrowRepository, BorrowRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+
+
+
 
 var app = builder.Build();
 
