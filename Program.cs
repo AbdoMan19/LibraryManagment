@@ -8,10 +8,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
-builder.Services.AddScoped<IMemberRepository , MemberRepository>();
-builder.Services.AddScoped<IBorrowRepository, BorrowRepository>();
-builder.Services.AddScoped<IBookRepository, BookRepository>();
-builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepo<>));
 
 
 
