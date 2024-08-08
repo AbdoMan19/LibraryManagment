@@ -1,13 +1,15 @@
-﻿using LibraryManagment.Repository;
+﻿using LibraryManagment.Repositories;
+using LibraryManagment.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagment.Controllers
 {
     public class MemberController : Controller
     {
-        private readonly IMemberRepository _memberRepository;
-        public MemberController(IMemberRepository memberRepository) {
-            _memberRepository = memberRepository;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public MemberController(IUnitOfWork unitOfWork) {
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Create()
         {

@@ -1,13 +1,14 @@
-﻿using LibraryManagment.Repository;
+﻿using LibraryManagment.Repositories;
+using LibraryManagment.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagment.Controllers
 {
     public class AuthorController : Controller
     {
-        private readonly IAuthorRepository? _authorRepository=null;
-        public AuthorController(IAuthorRepository authorRepository) {
-            _authorRepository = authorRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        public AuthorController(IUnitOfWork unitOfWork) {
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Create()
         {

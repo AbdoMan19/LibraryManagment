@@ -1,14 +1,15 @@
-﻿using LibraryManagment.Repository;
+﻿using LibraryManagment.Repositories;
+using LibraryManagment.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagment.Controllers
 {
     public class BorrowController : Controller
     {
-        private readonly IBorrowRepository? _borrowRepository=null;
-        public BorrowController(IBorrowRepository borrowRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public BorrowController(IUnitOfWork unitOfWork)
         {
-            _borrowRepository = borrowRepository;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Create()
         {

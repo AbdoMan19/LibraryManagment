@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using LibraryManagment.Data;
-using LibraryManagment.Repository;
+using LibraryManagment.Repositories;
+using LibraryManagment.UnitOfWork;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -9,6 +10,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepo<>));
+builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
 
 

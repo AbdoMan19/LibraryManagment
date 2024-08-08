@@ -1,7 +1,6 @@
 ﻿using LibraryManagment.Data;
-using LibraryManagment.Models;
 using Microsoft.EntityFrameworkCore;
-using System.CodeDom;
+using System.Linq.Expressions;
 
 namespace LibraryManagment.Repositories
 {
@@ -16,56 +15,83 @@ namespace LibraryManagment.Repositories
             _dbSet = _context.Set<T>();
         }
 
-        public async Task<bool> AddAsync(T entity)
+        public async Task<bool> Add(T entity)
         {
             try
             {
                 await _dbSet.AddAsync(entity);
-                await _context.SaveChangesAsync();
                 return true;
+
             }
             catch (Exception ex)
             {
                 return false;
             }
-            
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> Delete(object id)
         {
             try
             {
                 var entity = await _dbSet.FindAsync(id);
-                if (entity == null) return false;
-                _dbSet.Remove(entity);
-                return true;
-            }catch{
+                if (entity != null)
+                {
+                    _dbSet.Remove(entity);
+                    return true;
+                }
                 return false;
+            }catch(Exception ex)
+            {
+                return false;
+            }
+            
+         
+        }
 
+        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+            string includeProperties = "")
+        {
+            IQueryable<T> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return  orderBy(query).ToList();
+            }
+            else
+            {
+                return query.ToList();
             }
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<T>? GetById(object id)
         {
-            return await _dbSet.ToListAsync();
+            
+            return await _dbSet.FindAsync(id);       
         }
 
-        public async Task<T> GetByIdAsync(int id)
-        {
-            return await _dbSet.FindAsync(id);
-        }
-
-        public async Task<bool> UpdateAsync(T entity)
+        public async Task<bool> Update(T entity)
         {
             try
             {
-                _dbSet.Update(entity);
-                await _context.SaveChangesAsync();
-                return true;
+                _dbSet.Update(entity);  
+                return  true;
             }
-            catch
+            catch(Exception ex)
             {
                 return false;
+
             }
         }
     }

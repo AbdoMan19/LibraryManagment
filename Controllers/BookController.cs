@@ -1,13 +1,14 @@
-﻿using LibraryManagment.Repository;
+﻿using LibraryManagment.Repositories;
+using LibraryManagment.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagment.Controllers
 {
     public class BookController : Controller
     {
-        private readonly IBookRepository? _bookRepository=null;
-        public BookController(IBookRepository bookRepository) { 
-            _bookRepository = bookRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        public BookController(IUnitOfWork unitOfWork) {
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Create()
         {
