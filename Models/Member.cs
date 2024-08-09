@@ -7,6 +7,6 @@ namespace LibraryManagment.Models
         public string Name { get; set; }
         public DateOnly date { get; set; }
 
-        public ICollection<Borrow> Borrows { get; set; }
+        public ICollection<Borrow>? Borrows { get; set; }
     }
 }

@@ -6,9 +6,9 @@ namespace LibraryManagment.Repositories
         Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
             string includeProperties = "");
-        Task<T>? GetById(Object id);
-        Task<bool> Add(T entity);
-        Task<bool> Update(T entity);
-        Task<bool> Delete(Object id);
+        Task<T?> GetById(int id);
+        Task Add(T entity);
+        void Update(T entity);
+        void Delete(T entity);
     }
 }

@@ -13,27 +13,31 @@ namespace LibraryManagment.Services
 
         public Task<IEnumerable<Author>> GetAllAuthors()
         {
-            return _unitOfWork.AuthorRepository.GetAll();
+            return  _unitOfWork.AuthorRepository.GetAll();
         }
 
-        public Task<Author>? GetAuthorById(int id)
+        public Task<Author?> GetAuthorById(int id)
         {
             return _unitOfWork.AuthorRepository.GetById(id);
         }
 
-        public Task<bool> AddAuthor(Author author)
+        public  async Task<bool> AddAuthor(Author author)
         {
-            return _unitOfWork.AuthorRepository.Add(author);
+            await _unitOfWork.AuthorRepository.Add(author);
+            return await _unitOfWork.SaveAsync();
         }
 
-        public Task<bool> UpdateAuthor(Author author)
+        public async Task<bool> UpdateAuthor(Author author)
         {
-            return _unitOfWork.AuthorRepository.Update(author);
+            _unitOfWork.AuthorRepository.Update(author);
+            return await _unitOfWork.SaveAsync();
         }
 
-        public  Task<bool> DeleteAuthorAsync(int id)
+        public  async Task<bool> DeleteAuthor(Author author)
         {
-            return _unitOfWork.AuthorRepository.Delete(id);
+            _unitOfWork.AuthorRepository.Delete(author);
+            return await _unitOfWork.SaveAsync();
         }
+
     }
 }

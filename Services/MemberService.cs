@@ -11,29 +11,33 @@ namespace LibraryManagment.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Task<IEnumerable<Author>> GetAllAuthors()
+        public async Task<IEnumerable<Member>> GetAllMembers()
         {
-            return _unitOfWork.AuthorRepository.GetAll();
+            return await _unitOfWork.MemberRepository.GetAll();
+            
         }
 
-        public Task<Author>? GetAuthorById(int id)
+        public async Task<Member?> GetMemberById(int id)
         {
-            return _unitOfWork.AuthorRepository.GetById(id);
+            return await _unitOfWork.MemberRepository.GetById(id);
         }
 
-        public Task<bool> AddAuthor(Author author)
+        public async Task<bool> AddMember(Member member)
         {
-            return _unitOfWork.AuthorRepository.Add(author);
+             await _unitOfWork.MemberRepository.Add(member);
+             return await _unitOfWork.SaveAsync(); ;
         }
 
-        public Task<bool> UpdateAuthor(Author author)
+        public async Task<bool> UpdateMember(Member member)
         {
-            return _unitOfWork.AuthorRepository.Update(author);
+            _unitOfWork.MemberRepository.Update(member);
+            return await _unitOfWork.SaveAsync();
         }
 
-        public Task<bool> DeleteAuthorAsync(int id)
+        public async Task<bool> DeleteMemberAsync(Member member)
         {
-            return _unitOfWork.AuthorRepository.Delete(id);
+            _unitOfWork.MemberRepository.Delete(member);
+            return await _unitOfWork.SaveAsync();
         }
     }
 }

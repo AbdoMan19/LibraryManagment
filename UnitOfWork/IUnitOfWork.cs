@@ -8,6 +8,6 @@ namespace LibraryManagment.UnitOfWork
         IRepository<Member> MemberRepository {  get; }
         IRepository<Borrow> BorrowRepository {  get; }
         IRepository<Author> AuthorRepository {  get; }
-        Task SaveAsync();
+        Task<bool> SaveAsync();
     }
 }

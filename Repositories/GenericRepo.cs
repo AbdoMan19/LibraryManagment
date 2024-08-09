@@ -15,36 +15,14 @@ namespace LibraryManagment.Repositories
             _dbSet = _context.Set<T>();
         }
 
-        public async Task<bool> Add(T entity)
+        public async Task  Add(T entity)
         {
-            try
-            {
-                await _dbSet.AddAsync(entity);
-                return true;
-
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+           await _dbSet.AddAsync(entity);
         }
 
-        public async Task<bool> Delete(object id)
+        public void Delete(T entity)
         {
-            try
-            {
-                var entity = await _dbSet.FindAsync(id);
-                if (entity != null)
-                {
-                    _dbSet.Remove(entity);
-                    return true;
-                }
-                return false;
-            }catch(Exception ex)
-            {
-                return false;
-            }
-            
+            _dbSet.Remove(entity);
          
         }
 
@@ -67,7 +45,7 @@ namespace LibraryManagment.Repositories
 
             if (orderBy != null)
             {
-                return  orderBy(query).ToList();
+                return  await (query).ToListAsync();
             }
             else
             {
@@ -75,24 +53,18 @@ namespace LibraryManagment.Repositories
             }
         }
 
-        public async Task<T>? GetById(object id)
+        public async Task<T?> GetById(int id)
         {
             
             return await _dbSet.FindAsync(id);       
         }
 
-        public async Task<bool> Update(T entity)
+        public  void Update(T entity)
         {
-            try
-            {
-                _dbSet.Update(entity);  
-                return  true;
-            }
-            catch(Exception ex)
-            {
-                return false;
-
-            }
+             _dbSet.Update(entity);  
+     
         }
+
+        
     }
 }

@@ -20,9 +20,10 @@ namespace LibraryManagment.UnitOfWork
         public IRepository<Member> MemberRepository => _memberRepository ??= new GenericRepo<Member>(_context);
         public IRepository<Borrow> BorrowRepository => _borrowRepository ??= new GenericRepo<Borrow>(_context);
 
-        public async Task SaveAsync()
+        public async Task<bool> SaveAsync()
         {
-            await _context.SaveChangesAsync();
+            int count = await _context.SaveChangesAsync();
+            return  count > 0;
         }
 
         public void Dispose()
