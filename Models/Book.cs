@@ -8,7 +8,7 @@
         public DateOnly CreationDate { get; set; }
         public int AuthorId { get; set; }
 
-        public Author Author { get; set; }
+        public Author? Author { get; set; }
         public ICollection<Borrow>? Borrows { get; set; }
     }
 }
