@@ -1,5 +1,4 @@
-﻿using LibraryManagment.Repositories;
-using LibraryManagment.UnitOfWork;
+﻿using LibraryManagment.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagment.Controllers

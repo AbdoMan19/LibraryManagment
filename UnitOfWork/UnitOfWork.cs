@@ -2,7 +2,6 @@
 using LibraryManagment.Migrations;
 using LibraryManagment.Models;
 using LibraryManagment.Repositories;
-using Microsoft.EntityFrameworkCore;
 namespace LibraryManagment.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork

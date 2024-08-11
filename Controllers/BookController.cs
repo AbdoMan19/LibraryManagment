@@ -1,10 +1,8 @@
 ﻿using LibraryManagment.Models;
-using LibraryManagment.Repositories;
 using LibraryManagment.Services;
 using LibraryManagment.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagment.Controllers
 {
@@ -27,7 +25,6 @@ namespace LibraryManagment.Controllers
         public async Task<IActionResult> Create(Book book)
         {
             book.Author = await _bookService.GetAuhtorById(book.AuthorId);
-            if (!ModelState.IsValid) return BadRequest(ModelState);
             if (await _bookService.AddBook(book) == false) return StatusCode(500, "An error occurred while creating the author.");
             return RedirectToAction(nameof(Index));
         }
@@ -35,12 +32,18 @@ namespace LibraryManagment.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(Book book)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
             if (await _bookService.UpdateBook(book) == false) return StatusCode(500, "An error occurred while updating the author.");
-            var authors = await _bookService.GetAllAuthors();
-            ViewData["AuthorId"] = new SelectList(authors, "Id", "Id", book.AuthorId);
             return RedirectToAction(nameof(Index));
 
+        }
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            Book? book = await _bookService.GetBookById(id);
+            if (book is null) return NotFound();
+            var authors = await _bookService.GetAllAuthors();
+            ViewData["AuthorId"] = new SelectList(authors, "Id", "Id", book.AuthorId);
+            return View(book);
         }
         public async Task<IActionResult> Delete(int id)
         {
